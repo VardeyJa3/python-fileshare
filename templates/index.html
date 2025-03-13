@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>File Sharing App</title>
+    <style>
+        /* General styles */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9fb;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 20px 30px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+            text-align: center;
+            width: 400px;
+        }
+
+        h1 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+        }
+
+        form {
+            margin: 20px 0;
+        }
+
+        label {
+            display: flex;
+            font-weight: bold;
+            text-align: left;
+            margin: 10px 0 5px;
+            color: #555;
+        }
+
+        input[type="file"],
+        input[type="number"],
+        input[type="checkbox"],
+        button {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 15px;
+            font-size: 14px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #3498db;
+            box-shadow: 0 0 3px rgba(52, 152, 219, 0.5);
+        }
+
+        input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+        }
+
+        button {
+            background-color: #4caf50;
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-weight: bold;
+            transition: background-color 0.3s;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .message {
+            padding: 10px;
+            margin-top: 20px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .success {
+            background-color: #d4edda;
+            color: #155724;
+            border-color: #c3e6cb;
+        }
+
+        .error {
+            background-color: #f8d7da;
+            color: #721c24;
+            border-color: #f5c6cb;
+        }
+
+        a {
+            color: #3498db;
+            text-decoration: none;
+        }
+
+        a:hover {
+            text-decoration: underline;
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>File Sharing App</h1>
+
+        <!-- Success Message -->
+        {% if success %}
+        <div class="message success">
+            <p>{{ success }}</p>
+            <p>Download URL: <a href="{{ download_url }}" target="_blank">{{ download_url }}</a></p>
+            {% if expiration_date %}
+            <p>Expires on: {{ expiration_date }}</p>
+            {% endif %}
+            {% if max_downloads %}
+            <p>Maximum Downloads: {{ max_downloads }}</p>
+            {% endif %}
+        </div>
+        {% endif %}
+
+        <!-- Error Message -->
+        {% if error %}
+        <div class="message error">
+            <p>{{ error }}</p>
+        </div>
+        {% endif %}
+
+        <!-- Upload Form -->
+        <form action="/upload" method="post" enctype="multipart/form-data">
+            <label for="file">Select a File to Upload</label>
+            <input type="file" id="file" name="file" required>
+
+            <label for="expire_by_date">
+                <input type="checkbox" id="expire_by_date" name="expire_by_date">
+                Expire After Certain Days
+            </label>
+            <input type="number" id="days" name="days" placeholder="Enter number of days">
+
+            <label for="expire_by_downloads">
+                <input type="checkbox" id="expire_by_downloads" name="expire_by_downloads">
+                Expire After Certain Downloads
+            </label>
+            <input type="number" id="downloads" name="downloads" placeholder="Enter max downloads">
+
+            <button type="submit">Upload File</button>
+        </form>
+    </div>
+</body>
+</html>

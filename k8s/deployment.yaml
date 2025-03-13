@@ -1,0 +1,28 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: file-sharing-app
+  labels:
+    app: file-sharing-app
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: file-sharing-app
+  template:
+    metadata:
+      labels:
+        app: file-sharing-app
+    spec:
+      containers:
+        - name: file-sharing-app
+          image: jatinvardey/file-sharing-app:latest
+          ports:
+            - containerPort: 5000
+          volumeMounts:
+            - name: file-storage
+              mountPath: /app/uploads
+      volumes:
+        - name: file-storage
+          emptyDir: {}
