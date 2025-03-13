@@ -1,10 +1,10 @@
-from flask import Flask, render_template, request, redirect, jsonify, send_file
+from flask import Flask, render_template, request, send_file
 from werkzeug.utils import secure_filename
 from models import db, File, DownloadLink
 from config import Config
 from utils import delete_file, calculate_expiration_date
 import os
-from datetime import datetime, timedelta
+from datetime import datetime
 
 app = Flask(__name__)
 app.config.from_object(Config)
@@ -74,7 +74,7 @@ def upload_file():
         db.session.commit()
 
         # Generate the download URL
-        download_url = f"/download/{new_link.id}"
+        download_url = f"{request.host_url}download/{new_link.id}"
 
         # Return the updated index page with success message and download URL
         return render_template(
