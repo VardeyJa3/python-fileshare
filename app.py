@@ -16,9 +16,7 @@ os.makedirs(app.config['UPLOAD_FOLDER'], exist_ok=True)
 
 @app.route('/')
 def index():
-    """
-    Renders the file upload page (index.html).
-    """
+    # Renders the file upload page (index.html).
     return render_template('index.html')
 
 

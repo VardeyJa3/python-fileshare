@@ -16,6 +16,6 @@ class DownloadLink(db.Model):
     id = db.Column(db.String, primary_key=True, default=lambda: str(uuid.uuid4()))
     file_id = db.Column(db.String, db.ForeignKey('file.id'), nullable=False)
     expiration_date = db.Column(db.DateTime)
-    max_downloads = db.Column(db.Integer, nullable=True)  # None = unlimited
+    max_downloads = db.Column(db.Integer, nullable=True)
     current_downloads = db.Column(db.Integer, default=0)
     file = db.relationship('File', backref=db.backref('links', lazy=True))
